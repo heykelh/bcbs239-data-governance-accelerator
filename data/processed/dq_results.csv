@@ -1,0 +1,7 @@
+rule_name,dimension,issue_count,pass_rate
+customer_id_not_null,Completeness,1,99.8
+transaction_amount_positive,Validity,1,99.8
+reporting_date_not_future,Timeliness,17,96.61
+transaction_id_unique,Uniqueness,2,99.6
+country_code_valid,Validity,1,99.8
+risk_segment_not_null,Completeness,1,99.8
