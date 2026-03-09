@@ -8,7 +8,7 @@ const navItems = [
   { href: "/projet", label: "Le projet" },
   { href: "/governance", label: "Gouvernance des données" },
   { href: "/data-quality", label: "Qualité des données" },
-  { href: "/dashboard", label: "Cockpit de pilotage" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/architecture", label: "Architecture" },
 ];
 

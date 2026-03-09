@@ -134,7 +134,7 @@ export default function DashboardPage() {
   return (
     <main className="mx-auto max-w-7xl px-6 py-16 lg:px-8 text-slate-100">
       <section className="max-w-4xl">
-        <span className="eyebrow">Cockpit de pilotage</span>
+        <span className="eyebrow">Dashboard</span>
         <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Dashboard de pilotage de la qualité des données
         </h1>
@@ -146,7 +146,7 @@ export default function DashboardPage() {
         </p>
 
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-slate-300">
-          Ce cockpit illustre une logique simple de pilotage : exécuter des
+          Ce dashboard illustre une logique simple de pilotage : exécuter des
           contrôles, mesurer les anomalies, identifier les règles les plus
           exposées et donner de la visibilité aux acteurs responsables de la
           qualité des données.
@@ -271,7 +271,9 @@ export default function DashboardPage() {
       </section>
 
       <section className="mt-14 glass-card rounded-[2rem] p-8">
-        <h2 className="section-title text-white">Aperçu des données contrôlées</h2>
+        <h2 className="section-title text-white">
+          Aperçu des données contrôlées (15 premières lignes)
+        </h2>
 
         {loading ? (
           <p className="mt-6 text-slate-400">Chargement des données...</p>
@@ -315,6 +317,158 @@ export default function DashboardPage() {
             </table>
           </div>
         )}
+      </section>
+
+      <section className="mt-14 glass-card rounded-[2rem] p-8">
+        <h2 className="section-title text-white">
+          Comprendre le dataset et les signaux de risque
+        </h2>
+
+        <p className="mt-4 text-slate-300 leading-8">
+          Le dataset utilisé dans ce projet simule des données bancaires critiques
+          pouvant être mobilisées dans des processus de reporting, de contrôle ou de
+          pilotage du risque. Il contient volontairement plusieurs types d’anomalies
+          afin d’illustrer comment des contrôles de qualité permettent de détecter des
+          données potentiellement problématiques.
+        </p>
+
+        <div className="mt-8 overflow-x-auto">
+          <table className="min-w-full border-separate border-spacing-y-3">
+            <thead>
+              <tr className="text-left text-sm text-slate-400">
+                <th className="px-4">Colonne</th>
+                <th className="px-4">Description</th>
+                <th className="px-4">Pourquoi c’est important</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                [
+                  "transaction_id",
+                  "Identifiant unique de la transaction",
+                  "Permet d’éviter les doublons et de garantir l’unicité des enregistrements",
+                ],
+                [
+                  "customer_id",
+                  "Identifiant du client",
+                  "Indispensable pour rattacher une transaction à un client et assurer la traçabilité",
+                ],
+                [
+                  "exposure_amount",
+                  "Montant d’exposition associé à la transaction",
+                  "Utilisé pour apprécier le niveau de risque financier ou d’exposition",
+                ],
+                [
+                  "transaction_amount",
+                  "Montant de la transaction",
+                  "Une valeur négative ou incohérente peut révéler une anomalie de qualité ou de saisie",
+                ],
+                [
+                  "booking_date",
+                  "Date d’enregistrement de la transaction",
+                  "Permet de suivre la temporalité des opérations",
+                ],
+                [
+                  "reporting_date",
+                  "Date utilisée pour le reporting",
+                  "Une date future ou incohérente peut compromettre la fiabilité du reporting",
+                ],
+                [
+                  "risk_segment",
+                  "Catégorie de risque ou segment métier",
+                  "Permet de classifier les transactions et d’analyser les expositions par segment",
+                ],
+                [
+                  "source_system",
+                  "Système d’origine des données",
+                  "Important pour la traçabilité et l’analyse de la qualité par source",
+                ],
+                [
+                  "country_code",
+                  "Code pays associé à la transaction",
+                  "Une valeur invalide peut signaler un problème de conformité ou de qualité référentielle",
+                ],
+                [
+                  "status",
+                  "Statut de la transaction",
+                  "Permet de distinguer les opérations actives, en attente ou clôturées",
+                ],
+              ].map((row) => (
+                <tr key={row[0]} className="bg-white/[0.03]">
+                  <td className="rounded-xl px-4 py-4 text-sm font-medium text-white">
+                    {row[0]}
+                  </td>
+                  <td className="rounded-xl px-4 py-4 text-sm text-slate-300">
+                    {row[1]}
+                  </td>
+                  <td className="rounded-xl px-4 py-4 text-sm text-slate-300">
+                    {row[2]}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <h3 className="text-lg font-semibold text-white">
+              Comment repérer des données à risque ?
+            </h3>
+
+            <div className="mt-4 space-y-3 text-sm text-slate-300">
+              <p>
+                <span className="font-semibold text-white">Identifiant manquant :</span>{" "}
+                si <code className="text-cyan-300">customer_id</code> est vide, la
+                transaction n’est plus correctement rattachée à un client.
+              </p>
+
+              <p>
+                <span className="font-semibold text-white">Doublon :</span>{" "}
+                si <code className="text-cyan-300">transaction_id</code> apparaît plusieurs
+                fois, on risque une double comptabilisation ou un reporting erroné.
+              </p>
+
+              <p>
+                <span className="font-semibold text-white">Montant invalide :</span>{" "}
+                un <code className="text-cyan-300">transaction_amount</code> négatif ou
+                incohérent peut traduire une erreur de saisie ou de transformation.
+              </p>
+
+              <p>
+                <span className="font-semibold text-white">Date future :</span>{" "}
+                une <code className="text-cyan-300">reporting_date</code> dans le futur
+                peut signaler un problème de fraîcheur ou de calendrier de reporting.
+              </p>
+
+              <p>
+                <span className="font-semibold text-white">Code pays invalide :</span>{" "}
+                une valeur non reconnue dans <code className="text-cyan-300">country_code</code>
+                peut signaler une anomalie référentielle.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <h3 className="text-lg font-semibold text-white">
+              Pourquoi ces anomalies sont importantes ?
+            </h3>
+
+            <p className="mt-4 text-sm leading-7 text-slate-300">
+              Dans un contexte bancaire, des données de mauvaise qualité peuvent avoir
+              un impact direct sur la fiabilité du reporting, l’analyse des expositions,
+              la compréhension des risques et la qualité des décisions prises à partir
+              des données.
+            </p>
+
+            <p className="mt-4 text-sm leading-7 text-slate-400">
+              L’objectif du projet est précisément de montrer comment des contrôles de
+              qualité simples permettent d’identifier ces signaux faibles, de les
+              transformer en indicateurs de pilotage, puis de les rendre visibles aux
+              acteurs responsables de la gouvernance des données.
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   );
