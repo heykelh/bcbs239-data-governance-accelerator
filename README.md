@@ -1,203 +1,228 @@
 # BCBS239 Data Governance Accelerator
 
-A premium showcase project simulating a **Data Governance** and **Data Quality** framework for a European bank, inspired by **BCBS239** expectations around critical risk data.
+Simulation d’un dispositif de **gouvernance et de qualité des données** dans un contexte bancaire, inspiré des principes de la norme **BCBS 239**.
 
-## Project objective
+Ce projet illustre comment structurer un sujet de **Data Governance et Data Quality** de bout en bout :
+- définition des rôles
+- formalisation des règles de qualité
+- exécution de contrôles
+- pilotage via un cockpit de monitoring.
 
-Banks rely on accurate, complete and timely data to support risk monitoring, internal steering and regulatory reporting.  
-This project simulates a lightweight but credible governance and quality framework designed to improve the reliability of critical risk datasets.
+---
 
-## What this project demonstrates
+# 1. Contexte
 
-- A **target Data Governance model**
-- Clear **roles and responsibilities** across business, data and IT
-- A simple **Data Quality control framework**
-- A **simplified BCBS239 mapping**
-- A **gap analysis** between current and target state
-- A synthetic banking dataset with quality issues
-- Automated quality checks and KPI exports
-- A premium web showcase built with **Next.js + Vercel**
+Les banques utilisent des données provenant de nombreux systèmes (transactions, clients, risques, expositions, etc.).
 
-## Business context
+Lorsque ces données sont mal gouvernées :
+- les responsabilités sont floues
+- les contrôles sont hétérogènes
+- les anomalies ne sont pas visibles
+- les décisions peuvent être prises sur des données peu fiables.
 
-A bank consolidates risk-related data from multiple systems.  
-Ownership is fragmented, controls are inconsistent, and anomalies are not centrally monitored.
+La norme **BCBS 239** a été créée pour répondre à ces problématiques.
 
-The project addresses this by proposing:
+Elle impose aux banques systémiques de renforcer leurs capacités :
 
-- governance principles
-- a federated operating model
-- core data quality rules
-- KPI-based monitoring
-- a regulatory perspective aligned with BCBS239 logic
+- d’agrégation des données de risque
+- de reporting des risques
+- de gouvernance des données critiques.
 
-## Repository structure
+Source :  
+https://fr.wikipedia.org/wiki/BCBS_239
 
-```text
-bcbs239-data-governance-accelerator/
-├── README.md
-├── docs/
-├── data/
-│   ├── raw/
-│   └── processed/
-├── src/
-├── sql/
-├── assets/
-└── site/
+---
 
-Main deliverables
-Governance
+# 2. Objectif du projet
 
-Target Governance Model
+Ce projet simule une **mission de conseil data** visant à :
 
-Data Roles & RACI
+- structurer un cadre de gouvernance des données
+- définir des responsabilités claires
+- formaliser des règles de qualité
+- mesurer les anomalies
+- piloter la qualité des données via des indicateurs.
 
-Data Lifecycle
+L’objectif n’est pas seulement technique : il s’agit de démontrer une **approche structurée de gouvernance data**.
 
-Business Glossary
+---
 
-Regulatory
+# 3. Périmètre du projet
 
-Simplified BCBS239 Mapping
+Le projet couvre un périmètre simplifié de **données bancaires critiques** :
 
-Gap Analysis
+- transactions
+- clients
+- expositions
+- données utilisées dans le reporting de risque.
 
-Data Quality
+Ces données sont simulées dans un dataset synthétique.
 
-Synthetic risk dataset
+---
 
-DQ rules
+# 4. Modèle de gouvernance
 
-DQ check scripts
+Le projet s’appuie sur un modèle classique de gouvernance des données :
 
-KPI export
+### Data Owner
+Responsable métier des données et de leur niveau de qualité attendu.
 
-Showcase
+### Data Steward
+Responsable opérationnel du suivi de la qualité des données et de la coordination des remédiations.
 
-Dark premium web frontend
+### IT Custodian
+Responsable technique des systèmes, pipelines et contrôles techniques.
 
-Demo preview for interview use
+---
 
-Tech stack
+# 5. Tableau RACI
 
-Python
+Un tableau RACI permet de clarifier les responsabilités pour les principales activités :
 
-SQL
+| Activité | Data Owner | Data Steward | IT Custodian |
+|--------|--------|--------|--------|
+| Définir les règles métier | A | R | C |
+| Suivre les KPI de qualité | C | R | C |
+| Implémenter les contrôles techniques | C | C | R |
+| Prioriser les remédiations | A | R | C |
 
-CSV
+- **A** = Accountable  
+- **R** = Responsible  
+- **C** = Consulted
 
-Next.js
+Le RACI est un outil central dans la gouvernance data car il évite les zones de flou entre métiers, équipes data et IT.
 
-Tailwind CSS
+---
 
-Vercel
+# 6. Règles de Data Quality
 
-Quality dimensions covered
+Le projet implémente plusieurs contrôles de qualité simples mais représentatifs :
 
-Completeness
+### Complétude
+Exemple : `customer_id` ne doit pas être NULL.
 
-Accuracy
+### Unicité
+Exemple : `transaction_id` doit être unique.
 
-Consistency
+### Validité
+Exemple : `country_code` doit appartenir à une liste autorisée.
 
-Timeliness
+### Cohérence
+Exemple : `transaction_amount` ne peut pas être négatif.
 
-Validity
+### Fraîcheur
+Exemple : la date de reporting ne doit pas être incohérente avec la date de transaction.
 
-Uniqueness
+Les résultats de ces contrôles sont exportés dans un fichier CSV.
 
-Interview positioning
+---
 
-This project is designed to be presented not as a simple technical exercise, but as a consulting-style simulation combining:
+# 7. Architecture du projet
 
-governance
+Le projet suit une chaîne simple :
 
-quality controls
-
-monitoring
-
-regulatory awareness
-
-business-oriented communication
-
-Suggested interview pitch
-
-I designed this project as a simulation of a Data Governance and Data Quality mission in a banking context.
-The objective was to show how critical risk data can be governed, monitored and improved through a combination of ownership, controls, KPIs and a simplified BCBS239 perspective.
-
-Next steps
-
-Connect the frontend demo page to real generated CSV outputs
-
-Add architecture diagrams in assets/diagrams
-
-Add dashboard screenshots in assets/screenshots
-
-Create a short interview deck in assets/presentation
+Dataset bancaire simulé
+↓
+Contrôles Python
+↓
+Résultats de qualité exportés en CSV
+↓
+Cockpit de pilotage intégré au site
+↓
+Visualisation des anomalies et des KPI
 
 
 ---
 
-# 2) `docs/governance-model.md`
+# 8. Cockpit de pilotage
 
-```md
-# Target Data Governance Model
+Le site web du projet inclut un **cockpit de monitoring de la qualité des données**.
 
-## Objective
+Il présente :
 
-Define a lightweight but credible governance operating model for critical risk data used in management and regulatory reporting.
+- score global de qualité
+- nombre d’anomalies détectées
+- règles les plus exposées
+- tableau détaillé des contrôles
+- aperçu des données.
 
-## Governance principles
+Ce cockpit illustre comment transformer des contrôles techniques en **indicateurs de pilotage lisibles**.
 
-1. Business ownership of critical data
-2. Clear accountability for data quality issues
-3. Federated governance across business and IT
-4. Standardized controls across the data lifecycle
-5. Continuous monitoring through KPIs and dashboards
+---
 
-## Governance model
+# 9. Technologies utilisées
 
-The target model is federated:
+### Backend / Data
 
-- business domains own the data
-- data stewards coordinate quality monitoring and remediation
-- IT custodians support technical reliability, lineage and infrastructure
+- Python
+- Pandas
 
-## Scope
+### Data processing
 
-The model applies to the following critical domains:
+- génération de dataset synthétique
+- contrôles de qualité
 
-- customer data
-- transaction data
-- exposure data
-- risk reporting datasets
+### Frontend
 
-## Governance bodies
+- Next.js
+- TypeScript
+- TailwindCSS
 
-### Data Governance Committee
-Provides direction, arbitration and prioritization for critical data topics.
+### Visualisation
 
-### Domain Data Owners
-Own business definitions, usage expectations and remediation priorities.
+- cockpit web intégré au site
 
-### Data Stewards
-Coordinate operational quality monitoring and support issue management.
+---
 
-### IT / Data Platform teams
-Ensure pipeline robustness, storage reliability and technical controls.
+# 10. Structure du repository
 
-## Key processes
+bcbs239-data-governance-accelerator
+│
+├── data
+│ ├── risk_transactions.csv
+│ └── dq_results.csv
+│
+├── scripts
+│ └── data_quality_checks.py
+│
+├── site
+│ └── Next.js application
+│
+└── README.md
 
-- Data issue identification
-- Data issue logging and prioritization
-- Root cause analysis
-- Control execution and monitoring
-- KPI review
-- Remediation follow-up
 
-## Expected benefits
+---
 
-- improved ownership of critical data
-- better visibility on data issues
-- stronger collaboration between business and IT
-- improved reliability of risk-related reporting
+# 11. Ce que démontre ce projet
+
+Ce projet démontre la capacité à :
+
+- structurer un sujet de gouvernance des données
+- relier un cadre réglementaire à des contrôles opérationnels
+- formaliser des rôles et responsabilités
+- produire des indicateurs de qualité
+- restituer les résultats dans un outil de pilotage.
+
+---
+
+# 12. Pourquoi ce projet est pertinent pour un cabinet de conseil
+
+Dans un cabinet de conseil data, les missions autour de la gouvernance et de la qualité des données combinent généralement :
+
+- cadrage métier
+- organisation et gouvernance
+- mise en place de règles de qualité
+- pilotage via indicateurs.
+
+Ce projet reproduit cette logique à petite échelle.
+
+---
+
+# 13. Auteur
+
+Projet réalisé dans un objectif de démonstration de compétences en :
+
+- Data Governance
+- Data Quality
+- Data Analytics
+- Structuration de problématiques data dans un contexte bancaire.
