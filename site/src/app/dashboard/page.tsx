@@ -71,7 +71,7 @@ export default function DashboardPage() {
         });
 
         const rawHeaders = rawParsed[0].map((h) => h.replace(/\r/g, "").trim());
-        const rawData = rawParsed.slice(1, 9).map((row) => {
+        const rawData = rawParsed.slice(1, 16).map((row) => {
           const obj: Record<string, string> = {};
           rawHeaders.forEach((header, index) => {
             obj[header] = (row[index] ?? "").replace(/\r/g, "").trim();
